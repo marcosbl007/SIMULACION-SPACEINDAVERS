@@ -1,5 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
@@ -10,6 +12,9 @@ public class Juego extends JFrame {
     private Nave nave;
     private Enemigos enemigos;
     private ItemManager itemManager;
+    private JLabel timeValueLabel;
+    private Timer timer;
+    private int timeRemaining = 90;
 
     public Juego() {
         // Configurar el JFrame
@@ -64,7 +69,7 @@ public class Juego extends JFrame {
         bluePanel.add(timeLabel);
 
         // Añadir label del tiempo
-        JLabel timeValueLabel = new JLabel("90");
+        timeValueLabel = new JLabel("90");
         timeValueLabel.setForeground(Color.WHITE);
         timeValueLabel.setFont(new Font("DePixel", Font.BOLD, 13));
         timeValueLabel.setBounds(685, 50, 50, 20);
@@ -113,6 +118,22 @@ public class Juego extends JFrame {
         // Crear y añadir el gestor de ítems
         itemManager = new ItemManager(layeredPane);
         itemManager.start();
+
+        // Inicializar el timer
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timeRemaining--;
+                timeValueLabel.setText(String.valueOf(timeRemaining));
+                if (timeRemaining <= 0) {
+                    timer.stop();
+                    InterfazInicio vtn_Inicio = new InterfazInicio();
+                    vtn_Inicio.setVisible(true);
+                    setVisible(false);
+                }
+            }
+        });
+        timer.start();
 
         // Hacer visible la ventana
         setVisible(true);
