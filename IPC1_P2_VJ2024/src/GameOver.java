@@ -6,8 +6,13 @@ import java.awt.event.ActionListener;
 public class GameOver extends JFrame implements ActionListener {
 
     private JButton buttonInicio;
+    private JLabel scoreValueLabel;
+    private JTextField nicknameField;
+    private int puntaje;
 
-    public GameOver() {
+    public GameOver(int puntaje) {
+        this.puntaje = puntaje;
+        
         // Configurar el JFrame
         setTitle("Interfaz con fondo GIF");
         setSize(500, 500);
@@ -62,7 +67,8 @@ public class GameOver extends JFrame implements ActionListener {
         nicknameLabel.setBounds(40, 235, 250, 30);
 
         // Crear el JTextField para ingresar el apodo
-        JTextField nicknameField = new JTextField();
+        nicknameField = new JTextField();
+        nicknameField.setFont(new Font("DePixel", Font.BOLD, 12));
         nicknameField.setBounds(250, 235, 200, 30);
 
         // Crear el JLabel para el puntaje
@@ -72,7 +78,7 @@ public class GameOver extends JFrame implements ActionListener {
         scoreLabel.setBounds(65, 320, 200, 30);
 
         // Crear el JLabel para mostrar el puntaje
-        JLabel scoreValueLabel = new JLabel("0");
+        scoreValueLabel = new JLabel(String.valueOf(puntaje)); // Establecer el puntaje pasado
         scoreValueLabel.setFont(new Font("DePixel", Font.BOLD, 17));
         scoreValueLabel.setForeground(Color.WHITE);
         scoreValueLabel.setBounds(230, 320, 250, 30);
@@ -126,7 +132,10 @@ public class GameOver extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonInicio) {
-            InterfazInicio vtn_Juego = new InterfazInicio();
+            String nickname = nicknameField.getText();
+            ScoreManager.addScore(nickname, puntaje);
+            InterfazInicio vtn_Inicio = new InterfazInicio();
+            vtn_Inicio.setVisible(true);
             this.dispose();
         }
     }

@@ -121,7 +121,7 @@ public class InterfazInicio extends JFrame implements ActionListener {
         }else if (e.getSource() == buttonCargar) {
             JOptionPane.showMessageDialog(this, "Botón clickeado!");
         }else if (e.getSource() == buttonTOP5) {
-            GameOver vtn_top5 = new GameOver();
+            top5 vtn_top5 = new top5();
             this.dispose();
         }else if (e.getSource() == buttonExit) {
 

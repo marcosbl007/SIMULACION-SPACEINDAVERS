@@ -144,8 +144,8 @@ public class Juego extends JFrame {
         finalizarJuego();
         // Cerrar la ventana actual
         dispose();
-        // Abrir la pantalla de inicio
-        GameOver vtn_Inicio = new GameOver();
+        // Abrir la pantalla de Game Over y pasar el puntaje actual
+        GameOver vtn_Inicio = new GameOver(puntaje);
         vtn_Inicio.setVisible(true);
     }
 
@@ -182,3 +182,4 @@ public class Juego extends JFrame {
         timeValueLabel.setText(String.valueOf(timeRemaining));
     }
 }
+
