@@ -12,8 +12,8 @@ public class Nave extends Thread implements KeyListener {
     private ItemManager itemManager;
     private int naveY = 250;
     private boolean upPressed, downPressed, spacePressed;
-    private boolean running = true;  // Bandera de ejecución
     private Juego juego;
+    private boolean running = true;
 
     public Nave(JLayeredPane panel, Enemigos enemigos, ItemManager itemManager, Juego juego) {
         this.panel = panel;
@@ -134,10 +134,6 @@ public class Nave extends Thread implements KeyListener {
         disparos.removeAll(disparosAEliminar);
     }
 
-    public void finalizar() {
-        running = false;
-    }
-
     @Override
     public void run() {
         while (running) {
@@ -200,5 +196,9 @@ public class Nave extends Thread implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // No implementado
+    }
+
+    public void finalizar() {
+        running = false;
     }
 }

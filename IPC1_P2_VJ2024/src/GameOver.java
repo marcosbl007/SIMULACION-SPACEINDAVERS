@@ -12,7 +12,7 @@ public class GameOver extends JFrame implements ActionListener {
 
     public GameOver(int puntaje) {
         this.puntaje = puntaje;
-        
+
         // Configurar el JFrame
         setTitle("Interfaz con fondo GIF");
         setSize(500, 500);

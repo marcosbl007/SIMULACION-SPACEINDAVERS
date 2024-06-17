@@ -1,9 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyAdapter;
+import java.awt.event.*;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Juego extends JFrame {
 
@@ -113,6 +113,9 @@ public class Juego extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     regresarAlInicio();
+                } else if (e.getKeyCode() == KeyEvent.VK_S) {
+                    serializarPartida();
+                    regresarAlInicio();
                 }
             }
         });
@@ -144,8 +147,8 @@ public class Juego extends JFrame {
         finalizarJuego();
         // Cerrar la ventana actual
         dispose();
-        // Abrir la pantalla de Game Over y pasar el puntaje actual
-        GameOver vtn_Inicio = new GameOver(puntaje);
+        // Abrir la pantalla de inicio
+        InterfazInicio vtn_Inicio = new InterfazInicio();
         vtn_Inicio.setVisible(true);
     }
 
@@ -181,5 +184,23 @@ public class Juego extends JFrame {
         timeRemaining -= segundos;
         timeValueLabel.setText(String.valueOf(timeRemaining));
     }
-}
 
+    private void serializarPartida() {
+        try {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH_mm_dd_MM_yyyy");
+            String formattedDateTime = now.format(formatter);
+            File dir = new File("Juegos");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            String filePath = "Juegos/" + formattedDateTime + ".bin";
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+                oos.writeObject(new GameState(timeRemaining, puntaje, enemigos, nave, itemManager));
+                System.out.println("Se ha serializado tu partida.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Enemigos extends Thread {
-
+    
     private ArrayList<JLabel> enemigos;
     private HashMap<JLabel, Integer> impactosRestantes;
     private HashMap<JLabel, Integer> puntosEnemigos;
     private JLayeredPane panel;
     private int dy = 2;  // Velocidad vertical
     private boolean running = true;  // Bandera de ejecución
-
+    
     public Enemigos(JLayeredPane panel) {
         this.panel = panel;
         enemigos = new ArrayList<>();
@@ -19,7 +19,7 @@ public class Enemigos extends Thread {
         puntosEnemigos = new HashMap<>();
         crearEnemigos();
     }
-
+    
     private void crearEnemigos() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 5; j++) {
@@ -27,7 +27,7 @@ public class Enemigos extends Thread {
                 ImageIcon enemigoIcon;
                 int impactos = 2; // Por defecto, los enemigos de la primera columna necesitan 2 impactos
                 int puntos = 10;  // Puntos para el tipo de enemigo 1
-
+    
                 if (j == 0) {
                     enemigoIcon = new ImageIcon(getClass().getResource("/imgs/enemigo1.png"));
                     impactos = 2;  // Enemigos de la columna 1
@@ -53,30 +53,30 @@ public class Enemigos extends Thread {
             }
         }
     }
-
+    
     public ArrayList<JLabel> getEnemigos() {
         return enemigos;
     }
-
+    
     public int getImpactosRestantes(JLabel enemigo) {
         return impactosRestantes.get(enemigo);
     }
-
+    
     public void reducirImpactos(JLabel enemigo) {
         impactosRestantes.put(enemigo, impactosRestantes.get(enemigo) - 1);
     }
-
+    
     public int getPuntos(JLabel enemigo) {
         return puntosEnemigos.get(enemigo);
     }
-
+    
     public void eliminarEnemigo(JLabel enemigo) {
         enemigos.remove(enemigo);
         impactosRestantes.remove(enemigo);
         puntosEnemigos.remove(enemigo);
         panel.remove(enemigo);
     }
-
+    
     public void moverEnemigos() {
         for (JLabel enemigo : enemigos) {
             enemigo.setLocation(enemigo.getX(), enemigo.getY() + dy);
@@ -89,11 +89,11 @@ public class Enemigos extends Thread {
             }
         }
     }
-
+    
     public void finalizar() {
         running = false;
     }
-
+    
     @Override
     public void run() {
         while (running) {
