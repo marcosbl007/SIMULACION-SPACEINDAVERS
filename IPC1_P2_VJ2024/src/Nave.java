@@ -1,6 +1,9 @@
-import java.awt.Image;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class Nave extends Thread implements KeyListener {
@@ -14,29 +17,29 @@ public class Nave extends Thread implements KeyListener {
     private boolean upPressed, downPressed, spacePressed;
     private Juego juego;
     private boolean running = true;
-
+    
     public Nave(JLayeredPane panel, Enemigos enemigos, ItemManager itemManager, Juego juego) {
         this.panel = panel;
         this.enemigos = enemigos;
         this.itemManager = itemManager;
         this.juego = juego;
         disparos = new ArrayList<>();
-
+    
         ImageIcon naveIcon = new ImageIcon(getClass().getResource("/imgs/player.png"));
         Image NaveImage = naveIcon.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT); // Aumentar tamaño de los enemigos
         naveIcon = new ImageIcon(NaveImage);
         naveLabel = new JLabel(naveIcon);
         naveLabel.setBounds(50, naveY, 50, 50);
     }
-
+    
     public JLabel getLabel() {
         return naveLabel;
     }
-
+    
     private void detectarColisiones() {
         ArrayList<JLabel> disparosAEliminar = new ArrayList<>();
         ArrayList<JLabel> enemigosAEliminar = new ArrayList<>();
-
+    
         for (JLabel disparo : disparos) {
             for (JLabel enemigo : enemigos.getEnemigos()) {
                 if (disparo.getBounds().intersects(enemigo.getBounds())) {
@@ -50,23 +53,23 @@ public class Nave extends Thread implements KeyListener {
                 }
             }
         }
-
+    
         disparos.removeAll(disparosAEliminar);
         for (JLabel disparo : disparosAEliminar) {
             panel.remove(disparo);
         }
-
+    
         for (JLabel enemigo : enemigosAEliminar) {
             enemigos.eliminarEnemigo(enemigo);
         }
-
+    
         // Verificar si el jugador ha eliminado a todos los enemigos
         juego.verificarEstadoJuego();
     }
-
+    
     private void detectarColisionesConItems() {
         ArrayList<Item> itemsAEliminar = new ArrayList<>();
-
+    
         for (Item item : itemManager.getItems()) {
             if (naveLabel.getBounds().intersects(item.getBounds())) {
                 switch (item.getType()) {
@@ -86,13 +89,13 @@ public class Nave extends Thread implements KeyListener {
                 itemsAEliminar.add(item);
             }
         }
-
+    
         for (Item item : itemsAEliminar) {
             itemManager.getItems().remove(item);
             panel.remove(item);
         }
     }
-
+    
     private void detectarColisionesConNave() {
         for (JLabel enemigo : enemigos.getEnemigos()) {
             if (naveLabel.getBounds().intersects(enemigo.getBounds())) {
@@ -101,16 +104,16 @@ public class Nave extends Thread implements KeyListener {
             }
         }
     }
-
+    
     private void mostrarExplosion(JLabel enemigo) {
         ImageIcon explosionIcon = new ImageIcon(getClass().getResource("/imgs/explosion.png"));
         Image explosionImage = explosionIcon.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
         explosionIcon = new ImageIcon(explosionImage);
-
+    
         JLabel explosionLabel = new JLabel(explosionIcon);
         explosionLabel.setBounds(enemigo.getBounds());
         panel.add(explosionLabel, JLayeredPane.PALETTE_LAYER);
-
+    
         Timer timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,7 +124,7 @@ public class Nave extends Thread implements KeyListener {
         timer.setRepeats(false);
         timer.start();
     }
-
+    
     public void moverDisparos() {
         ArrayList<JLabel> disparosAEliminar = new ArrayList<>();
         for (JLabel disparo : disparos) {
@@ -133,7 +136,7 @@ public class Nave extends Thread implements KeyListener {
         }
         disparos.removeAll(disparosAEliminar);
     }
-
+    
     @Override
     public void run() {
         while (running) {
@@ -167,7 +170,7 @@ public class Nave extends Thread implements KeyListener {
             }
         }
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -181,7 +184,7 @@ public class Nave extends Thread implements KeyListener {
             spacePressed = true;
         }
     }
-
+    
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
@@ -192,12 +195,12 @@ public class Nave extends Thread implements KeyListener {
             downPressed = false;
         }
     }
-
+    
     @Override
     public void keyTyped(KeyEvent e) {
         // No implementado
     }
-
+    
     public void finalizar() {
         running = false;
     }

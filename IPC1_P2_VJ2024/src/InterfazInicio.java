@@ -119,7 +119,7 @@ public class InterfazInicio extends JFrame implements ActionListener {
             Juego vtn_Juego = new Juego();
             this.dispose();
         }else if (e.getSource() == buttonCargar) {
-            CargarJuego vtnCargarJuego = new CargarJuego();
+            CargarJuego vtn_Cargar = new CargarJuego();
             this.dispose();
         }else if (e.getSource() == buttonTOP5) {
             top5 vtn_top5 = new top5();

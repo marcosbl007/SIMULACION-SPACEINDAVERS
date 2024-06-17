@@ -17,23 +17,23 @@ public class GameState implements Serializable {
         this.nave = nave.getLabel();
         this.items = itemManager.getItems();
     }
-
+    
     public int getTimeRemaining() {
         return timeRemaining;
     }
-
+    
     public int getPuntaje() {
         return puntaje;
     }
-
+    
     public ArrayList<JLabel> getEnemigos() {
         return enemigos;
     }
-
+    
     public JLabel getNave() {
         return nave;
     }
-
+    
     public ArrayList<Item> getItems() {
         return items;
     }

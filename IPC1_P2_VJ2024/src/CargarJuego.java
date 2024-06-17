@@ -109,4 +109,7 @@ public class CargarJuego extends JFrame implements ActionListener {
             this.dispose();
         }
     }
+    public static void main(String[] args) {
+        new InterfazInicio();
+    }
 }

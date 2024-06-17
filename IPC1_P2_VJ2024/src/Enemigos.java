@@ -1,10 +1,10 @@
 import javax.swing.*;
-import java.awt.Image;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Enemigos extends Thread {
-    
+
     private ArrayList<JLabel> enemigos;
     private HashMap<JLabel, Integer> impactosRestantes;
     private HashMap<JLabel, Integer> puntosEnemigos;

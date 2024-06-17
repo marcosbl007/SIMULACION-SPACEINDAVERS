@@ -8,26 +8,26 @@ public class ItemManager extends Thread {
     private ArrayList<Item> items;
     private Random random;
     private boolean running = true;  // Bandera de ejecución
-
+    
     public ItemManager(JLayeredPane panel) {
         this.panel = panel;
         items = new ArrayList<>();
         random = new Random();
     }
-
+    
     public void crearItem() {
         int x = panel.getWidth();
         int y = random.nextInt(panel.getHeight() - 50) + 50; // Evitar que aparezcan en la parte azul
         int speed = random.nextInt(3) + 1;
-
+    
         Item.ItemType[] types = Item.ItemType.values();
         Item item = new Item(types[random.nextInt(types.length)], x, y, speed);
-
+    
         items.add(item);
         panel.add(item, JLayeredPane.PALETTE_LAYER);
         new Thread(item).start();
     }
-
+    
     @Override
     public void run() {
         while (running) {
@@ -39,11 +39,11 @@ public class ItemManager extends Thread {
             }
         }
     }
-
+    
     public ArrayList<Item> getItems() {
         return items;
     }
-
+    
     public void finalizar() {
         running = false;
         for (Item item : items) {

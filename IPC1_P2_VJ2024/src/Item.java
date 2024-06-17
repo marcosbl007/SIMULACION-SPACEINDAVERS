@@ -2,23 +2,23 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Item extends JLabel implements Runnable {
-
+    
     public enum ItemType {
         AUMENTO_TIEMPO,
         PUNTOS_EXTRA,
         DISMINUCION_TIEMPO,
         PENALIZACION
     }
-
+    
     private ItemType type;
     private int speed;
     private boolean running = true;  // Bandera de ejecución
-
+    
     public Item(ItemType type, int x, int y, int speed) {
         this.type = type;
         this.speed = speed;
         setBounds(x, y, 30, 30);  // Tamaño del hitbox de los ítems
-
+    
         // Asignar icono basado en el tipo de ítem
         switch (type) {
             case AUMENTO_TIEMPO:
@@ -35,19 +35,19 @@ public class Item extends JLabel implements Runnable {
                 break;
         }
     }
-
+    
     public ItemType getType() {
         return type;
     }
-
+    
     public void mover() {
         setLocation(getX() - speed, getY());
     }
-
+    
     public void finalizar() {
         running = false;
     }
-
+    
     @Override
     public void run() {
         while (running && getX() > -50) {

@@ -11,7 +11,7 @@ public class ScoreManager {
     static {
         loadScores();
     }
-
+    
     public static void addScore(String name, int score) {
         scores.add(new Score(name, score));
         Collections.sort(scores, Comparator.comparingInt(Score::getScore).reversed());
@@ -20,11 +20,11 @@ public class ScoreManager {
         }
         saveScores();
     }
-
+    
     public static ArrayList<Score> getScores() {
         return new ArrayList<>(scores);
     }
-
+    
     private static void saveScores() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(SCORES_FILE))) {
             for (Score score : scores) {
@@ -34,7 +34,7 @@ public class ScoreManager {
             e.printStackTrace();
         }
     }
-
+    
     private static void loadScores() {
         try (BufferedReader reader = new BufferedReader(new FileReader(SCORES_FILE))) {
             String line;
@@ -51,27 +51,27 @@ public class ScoreManager {
             e.printStackTrace();
         }
     }
-
+    
     public static class Score {
         private String name;
         private int score;
-
+    
         public Score(String name, int score) {
             this.name = name;
             this.score = score;
         }
-
+    
         public String getName() {
             return name;
         }
-
+    
         public int getScore() {
             return score;
         }
-
+    
         @Override
         public String toString() {
-            return name + ": " + score;
+            return name + " - " + score;
         }
     }
 }
