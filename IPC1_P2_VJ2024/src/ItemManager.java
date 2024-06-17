@@ -7,6 +7,7 @@ public class ItemManager extends Thread {
     private JLayeredPane panel;
     private ArrayList<Item> items;
     private Random random;
+    private boolean running = true;  // Bandera de ejecución
 
     public ItemManager(JLayeredPane panel) {
         this.panel = panel;
@@ -29,7 +30,7 @@ public class ItemManager extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (running) {
             crearItem();
             try {
                 Thread.sleep(6000); // Aparición cada 3 segundos, ajustable según necesidad
@@ -41,5 +42,12 @@ public class ItemManager extends Thread {
 
     public ArrayList<Item> getItems() {
         return items;
+    }
+
+    public void finalizar() {
+        running = false;
+        for (Item item : items) {
+            item.finalizar();  // Llamar al método finalizar() en lugar de stop()
+        }
     }
 }

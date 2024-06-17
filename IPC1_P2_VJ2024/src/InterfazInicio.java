@@ -121,7 +121,8 @@ public class InterfazInicio extends JFrame implements ActionListener {
         }else if (e.getSource() == buttonCargar) {
             JOptionPane.showMessageDialog(this, "Botón clickeado!");
         }else if (e.getSource() == buttonTOP5) {
-            top5 vtn_top5 = new top5();
+            GameOver vtn_top5 = new GameOver();
+            this.dispose();
         }else if (e.getSource() == buttonExit) {
 
         int option = JOptionPane.showConfirmDialog(this, "Esta seguro que desea salir?", "Exit", JOptionPane.YES_NO_OPTION);

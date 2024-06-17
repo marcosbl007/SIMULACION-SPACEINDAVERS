@@ -12,6 +12,7 @@ public class Item extends JLabel implements Runnable {
 
     private ItemType type;
     private int speed;
+    private boolean running = true;  // Bandera de ejecución
 
     public Item(ItemType type, int x, int y, int speed) {
         this.type = type;
@@ -43,9 +44,13 @@ public class Item extends JLabel implements Runnable {
         setLocation(getX() - speed, getY());
     }
 
+    public void finalizar() {
+        running = false;
+    }
+
     @Override
     public void run() {
-        while (getX() > -50) {
+        while (running && getX() > -50) {
             mover();
             try {
                 Thread.sleep(20);
