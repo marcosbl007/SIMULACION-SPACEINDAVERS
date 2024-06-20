@@ -1,5 +1,5 @@
+IPC1,1320
 Marcos,1140
 Baten,1100
 Marcos,1090
 Dan,1040
-Jorge,950
