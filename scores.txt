@@ -1,2 +1,5 @@
 Marcos,1140
+Marcos,1090
+Jorge,950
+Pepa,530
 JOsue,440

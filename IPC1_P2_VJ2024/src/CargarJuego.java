@@ -1,15 +1,15 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 public class CargarJuego extends JFrame implements ActionListener {
 
     private JButton buttonInicio, buttonBuscarJuego, buttonCargarJuego;
+
+    private File archivoSeleccionado;
 
     public CargarJuego() {
         // Configurar el JFrame
@@ -64,7 +64,6 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonBuscarJuego.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonBuscarJuego.addActionListener(this);
     
-    
         buttonCargarJuego = new JButton("CARGAR JUEGO");
         buttonCargarJuego.setBounds(75, 440, 350, 70);  // Posición y tamaño del botón
         buttonCargarJuego.setContentAreaFilled(false);
@@ -107,8 +106,25 @@ public class CargarJuego extends JFrame implements ActionListener {
         if (e.getSource() == buttonInicio) {
             InterfazInicio vtn_Juego = new InterfazInicio();
             this.dispose();
+        } else if (e.getSource() == buttonBuscarJuego) {
+            buscarArchivo();
         }
     }
+
+    private void buscarArchivo() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo (.bin)", "bin");
+        fileChooser.setFileFilter(filter);
+    
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            archivoSeleccionado = fileChooser.getSelectedFile();
+            JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + archivoSeleccionado.getName(), "Archivo Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
     public static void main(String[] args) {
         new InterfazInicio();
     }
