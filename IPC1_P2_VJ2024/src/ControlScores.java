@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ScoreManager {
+public class ControlScores {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
     private static final int MAX_SCORES = 5;
     private static final String SCORES_FILE = Paths.get(System.getProperty("user.dir"), "scores.txt").toString();
     private static ArrayList<Score> scores = new ArrayList<>();
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     static {
         loadScores();
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     
     public static void addScore(String name, int score) {
         scores.add(new Score(name, score));
@@ -21,11 +24,13 @@ public class ScoreManager {
         }
         saveScores();
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////   
     
     public static ArrayList<Score> getScores() {
         return new ArrayList<>(scores);
     }
-    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static void saveScores() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(SCORES_FILE))) {
             for (Score score : scores) {
@@ -35,7 +40,8 @@ public class ScoreManager {
             e.printStackTrace();
         }
     }
-    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private static void loadScores() {
         try (BufferedReader reader = new BufferedReader(new FileReader(SCORES_FILE))) {
             String line;
@@ -52,6 +58,7 @@ public class ScoreManager {
             e.printStackTrace();
         }     
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public static class Score {
         private String name;
@@ -75,4 +82,5 @@ public class ScoreManager {
             return name + " - " + score;
         }
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

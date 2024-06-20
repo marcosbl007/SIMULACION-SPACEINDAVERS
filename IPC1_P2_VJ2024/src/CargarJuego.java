@@ -9,24 +9,21 @@ import java.io.ObjectInputStream;
 
 public class CargarJuego extends JFrame implements ActionListener {
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private JButton buttonInicio, buttonBuscarJuego, buttonCargarJuego;
     private File archivoSeleccionado;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public CargarJuego() {
-        // Configurar el JFrame
+
         setTitle("Interfaz con fondo GIF");
         setSize(500, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Cargar el GIF
         ImageIcon gifIcon = new ImageIcon(getClass().getResource("/imgs/gifLogin.gif"));
-
-        // Redimensionar el GIF
         Image image = gifIcon.getImage().getScaledInstance(500, 650, Image.SCALE_DEFAULT);
         gifIcon = new ImageIcon(image);
-
-        // Crear un JLabel con el GIF redimensionado
         JLabel gifLabel = new JLabel(gifIcon);
 
         JLabel titleLabel = new JLabel("SPACE");
@@ -41,9 +38,8 @@ public class CargarJuego extends JFrame implements ActionListener {
         titleLabel2.setBounds(50, 170, 400, 70);
         titleLabel2.setOpaque(false);
 
-        // Crear el botón
         buttonInicio = new JButton("< REGRESAR");
-        buttonInicio.setBounds(0, 0, 250, 70);  // Posición y tamaño del botón
+        buttonInicio.setBounds(0, 0, 250, 70);
         buttonInicio.setContentAreaFilled(false);
         buttonInicio.setOpaque(false);
         buttonInicio.setBorderPainted(false);
@@ -55,7 +51,7 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonInicio.addActionListener(this);
 
         buttonBuscarJuego = new JButton("BUSCAR JUEGO");
-        buttonBuscarJuego.setBounds(75, 320, 350, 70);  // Posición y tamaño del botón
+        buttonBuscarJuego.setBounds(75, 320, 350, 70);
         buttonBuscarJuego.setContentAreaFilled(false);
         buttonBuscarJuego.setOpaque(false);
         buttonBuscarJuego.setBorderPainted(true);
@@ -66,7 +62,7 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonBuscarJuego.addActionListener(this);
 
         buttonCargarJuego = new JButton("CARGAR JUEGO");
-        buttonCargarJuego.setBounds(75, 440, 350, 70);  // Posición y tamaño del botón
+        buttonCargarJuego.setBounds(75, 440, 350, 70);
         buttonCargarJuego.setContentAreaFilled(false);
         buttonCargarJuego.setOpaque(false);
         buttonCargarJuego.setBorderPainted(true);
@@ -76,11 +72,9 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonCargarJuego.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonCargarJuego.addActionListener(this);
 
-        // Crear un JLayeredPane para superponer el botón sobre el GIF
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(500, 650));
 
-        // Añadir el JLabel y el botón al JLayeredPane
         gifLabel.setBounds(0, 0, 500, 650);
         layeredPane.add(gifLabel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(buttonInicio, JLayeredPane.PALETTE_LAYER);
@@ -89,17 +83,15 @@ public class CargarJuego extends JFrame implements ActionListener {
         layeredPane.add(titleLabel, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(titleLabel2, JLayeredPane.PALETTE_LAYER);
 
-        // Añadir el JLayeredPane al JFrame
         setLayout(new BorderLayout());
         add(layeredPane, BorderLayout.CENTER);
 
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setUndecorated(true);
-
-        // Hacer visible la ventana
         setVisible(true);
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -116,7 +108,7 @@ public class CargarJuego extends JFrame implements ActionListener {
         } else if (e.getSource() == buttonCargarJuego) {
             if (archivoSeleccionado != null) {
                 try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivoSeleccionado))) {
-                    GameState estadoJuego = (GameState) ois.readObject();
+                    StatusGame estadoJuego = (StatusGame) ois.readObject();
                     Juego juego = new Juego(estadoJuego);
                     juego.setVisible(true);
                     this.dispose();
@@ -128,8 +120,10 @@ public class CargarJuego extends JFrame implements ActionListener {
             }
         }
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     public static void main(String[] args) {
         new InterfazInicio();
     }
 }
+  

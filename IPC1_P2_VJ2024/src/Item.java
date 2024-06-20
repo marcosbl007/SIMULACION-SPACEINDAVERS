@@ -1,25 +1,25 @@
+import java.awt.Image;
 import javax.swing.*;
-import java.awt.*;
 
 public class Item extends JLabel implements Runnable {
-    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
     public enum ItemType {
         AUMENTO_TIEMPO,
         PUNTOS_EXTRA,
         DISMINUCION_TIEMPO,
         PENALIZACION
     }
-    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private ItemType type;
     private int speed;
-    private boolean running = true;  // Bandera de ejecución
+    private boolean running = true;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public Item(ItemType type, int x, int y, int speed) {
         this.type = type;
         this.speed = speed;
-        setBounds(x, y, 30, 30);  // Tamaño del hitbox de los ítems
+        setBounds(x, y, 30, 30);
     
-        // Asignar icono basado en el tipo de ítem
         switch (type) {
             case AUMENTO_TIEMPO:
                 setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/imgs/relojboni.png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT)));
@@ -35,6 +35,7 @@ public class Item extends JLabel implements Runnable {
                 break;
         }
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public ItemType getType() {
         return type;
@@ -47,6 +48,7 @@ public class Item extends JLabel implements Runnable {
     public void finalizar() {
         running = false;
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @Override
     public void run() {
@@ -59,4 +61,5 @@ public class Item extends JLabel implements Runnable {
             }
         }
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

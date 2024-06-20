@@ -8,20 +8,15 @@ public class InterfazInicio extends JFrame implements ActionListener {
     private JButton buttonInicio, buttonCargar, buttonTOP5, buttonExit;
 
     public InterfazInicio() {
-        // Configurar el JFrame
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
         setTitle("Interfaz con fondo GIF");
         setSize(500, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-    
-        // Cargar el GIF
+         
         ImageIcon gifIcon = new ImageIcon(getClass().getResource("/imgs/gifLogin.gif"));
-    
-        // Redimensionar el GIF
         Image image = gifIcon.getImage().getScaledInstance(500, 650, Image.SCALE_DEFAULT);
         gifIcon = new ImageIcon(image);
-    
-        // Crear un JLabel con el GIF redimensionado
         JLabel gifLabel = new JLabel(gifIcon);
     
         JLabel titleLabel = new JLabel("SPACE");
@@ -35,10 +30,7 @@ public class InterfazInicio extends JFrame implements ActionListener {
         titleLabel2.setForeground(Color.WHITE);
         titleLabel2.setBounds(50, 170, 400, 70);
         titleLabel2.setOpaque(false);
-    
-    
-    
-        // Crear el botón
+     
         buttonInicio = new JButton("NUEVO JUEGO");
         buttonInicio.setBounds(78, 300, 350, 70);  // Posición y tamaño del botón
         buttonInicio.setContentAreaFilled(false);
@@ -49,7 +41,6 @@ public class InterfazInicio extends JFrame implements ActionListener {
         buttonInicio.setForeground(Color.WHITE);
         buttonInicio.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonInicio.addActionListener(this);
-    
     
         buttonCargar = new JButton("CARGAR JUEGO");
         buttonCargar.setBounds(78, 380, 350, 70);  // Posición y tamaño del botón
@@ -62,7 +53,6 @@ public class InterfazInicio extends JFrame implements ActionListener {
         buttonCargar.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonCargar.addActionListener(this);
     
-    
         buttonTOP5 = new JButton("TOP 5");
         buttonTOP5.setBounds(78, 460, 350, 70);  // Posición y tamaño del botón
         buttonTOP5.setContentAreaFilled(false);
@@ -73,7 +63,6 @@ public class InterfazInicio extends JFrame implements ActionListener {
         buttonTOP5.setForeground(Color.WHITE);
         buttonTOP5.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonTOP5.addActionListener(this);
-    
     
         buttonExit = new JButton("SALIR");
         buttonExit.setBounds(78, 540, 350, 70);  // Posición y tamaño del botón
@@ -86,12 +75,9 @@ public class InterfazInicio extends JFrame implements ActionListener {
         buttonExit.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonExit.addActionListener(this);
     
-    
-        // Crear un JLayeredPane para superponer el botón sobre el GIF
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(500, 650));
     
-        // Añadir el JLabel y el botón al JLayeredPane
         gifLabel.setBounds(0, 0, 500, 650);
         layeredPane.add(gifLabel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(buttonInicio, JLayeredPane.PALETTE_LAYER);
@@ -100,19 +86,15 @@ public class InterfazInicio extends JFrame implements ActionListener {
         layeredPane.add(buttonExit, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(titleLabel, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(titleLabel2, JLayeredPane.PALETTE_LAYER);
-    
-        // Añadir el JLayeredPane al JFrame
         setLayout(new BorderLayout());
         add(layeredPane, BorderLayout.CENTER);
     
         this.setResizable(false);  
         this.setLocationRelativeTo(null);
         this.setUndecorated(true); 
-    
-        // Hacer visible la ventana
         setVisible(true);
     }
-    
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonInicio) {
