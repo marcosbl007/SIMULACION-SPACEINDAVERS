@@ -1,11 +1,12 @@
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class ScoreManager {
     private static final int MAX_SCORES = 5;
-    private static final String SCORES_FILE = "scores.txt";
+    private static final String SCORES_FILE = Paths.get(System.getProperty("user.dir"), "scores.txt").toString();
     private static ArrayList<Score> scores = new ArrayList<>();
 
     static {
@@ -49,7 +50,7 @@ public class ScoreManager {
             Collections.sort(scores, Comparator.comparingInt(Score::getScore).reversed());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }     
     }
     
     public static class Score {
@@ -75,7 +76,3 @@ public class ScoreManager {
         }
     }
 }
-
-
-
-

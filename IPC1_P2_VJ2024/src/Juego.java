@@ -28,7 +28,7 @@ public class Juego extends JFrame {
     
         // Crear el panel azul
         bluePanel = new JPanel();
-        bluePanel.setBackground(Color.BLUE);
+        bluePanel.setBackground(new Color(25, 107, 189));
         bluePanel.setBounds(0, 0, 1000, 100);  // Ajustar el tamaño y la posición del panel azul
         bluePanel.setLayout(null);
     
@@ -115,7 +115,7 @@ public class Juego extends JFrame {
                     regresarAlInicio();
                 } else if (e.getKeyCode() == KeyEvent.VK_S) {
                     serializarPartida();
-                    regresarAlInicio();
+                    regresarAlInicioS();
                 }
             }
         });
@@ -149,6 +149,15 @@ public class Juego extends JFrame {
         dispose();
         // Abrir la pantalla de inicio
         GameOver vtn_Inicio = new GameOver(puntaje);
+        vtn_Inicio.setVisible(true);
+    }
+
+    public void regresarAlInicioS() {
+        finalizarJuego();
+        // Cerrar la ventana actual
+        dispose();
+        // Abrir la pantalla de inicio
+        InterfazInicio vtn_Inicio = new InterfazInicio();
         vtn_Inicio.setVisible(true);
     }
     
