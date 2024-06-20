@@ -20,10 +20,21 @@ public class Enemigos extends Thread {
         crearEnemigos();
     }
     
+    public Enemigos(JLayeredPane panel, ArrayList<JLabel> enemigos) {
+        this.panel = panel;
+        this.enemigos = enemigos;
+        impactosRestantes = new HashMap<>();
+        puntosEnemigos = new HashMap<>();
+        for (JLabel enemigo : enemigos) {
+            impactosRestantes.put(enemigo, 2);  // Asignar un valor por defecto
+            puntosEnemigos.put(enemigo, 10);  // Asignar un valor por defecto
+        }
+    }
+    
     private void crearEnemigos() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 5; j++) {
-                
+    
                 ImageIcon enemigoIcon;
                 int impactos = 2; // Por defecto, los enemigos de la primera columna necesitan 2 impactos
                 int puntos = 10;  // Puntos para el tipo de enemigo 1
@@ -44,7 +55,7 @@ public class Enemigos extends Thread {
     
                 Image enemigoImage = enemigoIcon.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT); // Aumentar tamaño de los enemigos
                 enemigoIcon = new ImageIcon(enemigoImage);
-                
+    
                 JLabel enemigo = new JLabel(enemigoIcon);
                 enemigo.setBounds(700 + j * 50, 50 + i * 50, 40, 40); // Ajustar la posición y tamaño de los enemigos
                 enemigos.add(enemigo);
@@ -59,15 +70,15 @@ public class Enemigos extends Thread {
     }
     
     public int getImpactosRestantes(JLabel enemigo) {
-        return impactosRestantes.get(enemigo);
+        return impactosRestantes.getOrDefault(enemigo, 0);
     }
     
     public void reducirImpactos(JLabel enemigo) {
-        impactosRestantes.put(enemigo, impactosRestantes.get(enemigo) - 1);
+        impactosRestantes.put(enemigo, impactosRestantes.getOrDefault(enemigo, 1) - 1);
     }
     
     public int getPuntos(JLabel enemigo) {
-        return puntosEnemigos.get(enemigo);
+        return puntosEnemigos.getOrDefault(enemigo, 0);
     }
     
     public void eliminarEnemigo(JLabel enemigo) {

@@ -15,6 +15,16 @@ public class ItemManager extends Thread {
         random = new Random();
     }
     
+    public ItemManager(JLayeredPane panel, ArrayList<Item> items) {
+        this.panel = panel;
+        this.items = items;
+        random = new Random();
+        for (Item item : items) {
+            panel.add(item, JLayeredPane.PALETTE_LAYER);
+            new Thread(item).start();
+        }
+    }
+    
     public void crearItem() {
         int x = panel.getWidth();
         int y = random.nextInt(panel.getHeight() - 50) + 50; // Evitar que aparezcan en la parte azul

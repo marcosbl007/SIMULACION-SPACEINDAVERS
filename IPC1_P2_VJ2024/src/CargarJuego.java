@@ -1,14 +1,15 @@
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class CargarJuego extends JFrame implements ActionListener {
 
     private JButton buttonInicio, buttonBuscarJuego, buttonCargarJuego;
-
     private File archivoSeleccionado;
 
     public CargarJuego() {
@@ -17,29 +18,29 @@ public class CargarJuego extends JFrame implements ActionListener {
         setSize(500, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-    
+
         // Cargar el GIF
         ImageIcon gifIcon = new ImageIcon(getClass().getResource("/imgs/gifLogin.gif"));
-    
+
         // Redimensionar el GIF
         Image image = gifIcon.getImage().getScaledInstance(500, 650, Image.SCALE_DEFAULT);
         gifIcon = new ImageIcon(image);
-    
+
         // Crear un JLabel con el GIF redimensionado
         JLabel gifLabel = new JLabel(gifIcon);
-    
+
         JLabel titleLabel = new JLabel("SPACE");
         titleLabel.setFont(new Font("Games Italic", Font.BOLD, 80));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBounds(107, 100, 290, 70);
         titleLabel.setOpaque(false);
-        
+
         JLabel titleLabel2 = new JLabel("INVADERS");
         titleLabel2.setFont(new Font("Games Italic", Font.BOLD, 80));
         titleLabel2.setForeground(Color.WHITE);
         titleLabel2.setBounds(50, 170, 400, 70);
         titleLabel2.setOpaque(false);
-    
+
         // Crear el botón
         buttonInicio = new JButton("< REGRESAR");
         buttonInicio.setBounds(0, 0, 250, 70);  // Posición y tamaño del botón
@@ -52,7 +53,7 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonInicio.setForeground(Color.WHITE);
         buttonInicio.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonInicio.addActionListener(this);
-    
+
         buttonBuscarJuego = new JButton("BUSCAR JUEGO");
         buttonBuscarJuego.setBounds(75, 320, 350, 70);  // Posición y tamaño del botón
         buttonBuscarJuego.setContentAreaFilled(false);
@@ -63,7 +64,7 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonBuscarJuego.setForeground(Color.WHITE);
         buttonBuscarJuego.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonBuscarJuego.addActionListener(this);
-    
+
         buttonCargarJuego = new JButton("CARGAR JUEGO");
         buttonCargarJuego.setBounds(75, 440, 350, 70);  // Posición y tamaño del botón
         buttonCargarJuego.setContentAreaFilled(false);
@@ -74,12 +75,11 @@ public class CargarJuego extends JFrame implements ActionListener {
         buttonCargarJuego.setForeground(Color.WHITE);
         buttonCargarJuego.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         buttonCargarJuego.addActionListener(this);
-    
-    
+
         // Crear un JLayeredPane para superponer el botón sobre el GIF
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(500, 650));
-    
+
         // Añadir el JLabel y el botón al JLayeredPane
         gifLabel.setBounds(0, 0, 500, 650);
         layeredPane.add(gifLabel, JLayeredPane.DEFAULT_LAYER);
@@ -88,40 +88,44 @@ public class CargarJuego extends JFrame implements ActionListener {
         layeredPane.add(buttonBuscarJuego, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(titleLabel, JLayeredPane.PALETTE_LAYER);
         layeredPane.add(titleLabel2, JLayeredPane.PALETTE_LAYER);
-    
+
         // Añadir el JLayeredPane al JFrame
         setLayout(new BorderLayout());
         add(layeredPane, BorderLayout.CENTER);
-    
-        this.setResizable(false);  
+
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setUndecorated(true); 
-    
+        this.setUndecorated(true);
+
         // Hacer visible la ventana
         setVisible(true);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonInicio) {
             InterfazInicio vtn_Juego = new InterfazInicio();
             this.dispose();
         } else if (e.getSource() == buttonBuscarJuego) {
-            buscarArchivo();
-        }
-    }
-
-    private void buscarArchivo() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo (.bin)", "bin");
-        fileChooser.setFileFilter(filter);
-    
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            archivoSeleccionado = fileChooser.getSelectedFile();
-            JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + archivoSeleccionado.getName(), "Archivo Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos BIN", "bin"));
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                archivoSeleccionado = fileChooser.getSelectedFile();
+            }
+        } else if (e.getSource() == buttonCargarJuego) {
+            if (archivoSeleccionado != null) {
+                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivoSeleccionado))) {
+                    GameState estadoJuego = (GameState) ois.readObject();
+                    Juego juego = new Juego(estadoJuego);
+                    juego.setVisible(true);
+                    this.dispose();
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo de juego primero.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

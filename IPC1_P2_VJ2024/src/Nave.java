@@ -32,6 +32,16 @@ public class Nave extends Thread implements KeyListener {
         naveLabel.setBounds(50, naveY, 50, 50);
     }
     
+    public Nave(JLayeredPane panel, Enemigos enemigos, ItemManager itemManager, Juego juego, JLabel nave) {
+        this.panel = panel;
+        this.enemigos = enemigos;
+        this.itemManager = itemManager;
+        this.juego = juego;
+        disparos = new ArrayList<>();
+        naveLabel = nave;
+        naveY = nave.getY();
+    }
+    
     public JLabel getLabel() {
         return naveLabel;
     }
